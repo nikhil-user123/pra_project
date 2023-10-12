@@ -1,36 +1,43 @@
-'use client'
+"use client"
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation'
+import users from '@/app/data';
 
-export default function Home() {
-  const [name, setName] = useState('');
+const LoginForm = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setName(value);
+  const handleLogin = () => {
+    const user = users.find((u) => u.username === username && u.password === password);
+
+    if (user) {
+      sessionStorage.setItem('user', JSON.stringify(user));
+      router.push('/dashboard');
+    } else {
+      alert('Invalid username or password');
+    }
   };
 
-  console.log(name);
-  const handleSubmit = () => {
-    Cookies.set('formData', name);
-
-    router.push("/data");
-  };
   return (
-    <main >
-      <form>
-        <div>
-          <div></div>
-          <label>Name:</label>
-          <input type="text" name="name" value={name} onChange={handleChange} />
-        </div>
-        <button type="button" onClick={handleSubmit}>
-          Submit
-        </button>
-      </form>
-    </main>
-  )
-}
+    <div>
+      <h1>Login</h1>
+      <input
+        type="text"
+        placeholder="Username"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+};
+
+export default LoginForm;

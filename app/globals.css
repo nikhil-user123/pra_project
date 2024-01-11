@@ -21,3 +21,28 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.uploading_box{
+  width: auto;
+  height: 400px;
+
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  flex-direction: column;
+  padding: 20px;
+
+  border-radius: 20px;
+  border: 1px solid #353535;
+}
+
+.upload_button{
+  width: 100%;
+  font-size: 16px;
+  height: 40px;
+  color: #ffffff;
+  background-color: rgb(160, 147, 255);
+  border-radius: 30px;
+  border: 0.5px solid rgb(74, 0, 172);
+  margin: 30px 0 10px 0;
+}

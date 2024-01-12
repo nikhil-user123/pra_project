@@ -9,7 +9,7 @@ const Upload = () => {
     movieDescription: '',
     rating: '',
     genre: '',
-    image: null,
+    image: '',
   });
 
   const handleInputChange = (e) => {
@@ -50,7 +50,7 @@ const Upload = () => {
     // Here, you can send formData to your backend endpoint using Axios or fetch.
     // Example: 
     try {
-      const response = await axios.post('/api/upload', formData, {
+      const response = await axios.post('/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import axios from 'axios';
 
-const Upload = () => {
+const Home = () => {
+
   const [movieData, setMovieData] = useState({
     movieName: '',
     movieDescription: '',
@@ -30,7 +31,7 @@ const Upload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    try{
     const formData = new FormData();
     formData.append('movieName', movieData.movieName);
     formData.append('movieDescription', movieData.movieDescription);
@@ -38,28 +39,44 @@ const Upload = () => {
     formData.append('genre', movieData.genre);
     formData.append('image', movieData.image);
 
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
+    const response = await axios.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
 
-    // Log FormData as a JSON object
-    console.log('Form data in JSON:', JSON.stringify(formDataObject));
+    setMovieData([...movies, response.data]);
+  } catch (error) {
+    console.error('Error adding movie:', error);
+  }
+    // formData.append('movieName', movieData.movieName);
+    // formData.append('movieDescription', movieData.movieDescription);
+    // formData.append('rating', movieData.rating);
+    // formData.append('genre', movieData.genre);
+    // formData.append('image', movieData.image);
+
+    // const formDataObject = {};
+    // formData.forEach((value, key) => {
+    //   formDataObject[key] = value;
+    // });
+
+    // // Log FormData as a JSON object
+    // console.log('Form data in JSON:', JSON.stringify(formDataObject));
 
 
-    // Here, you can send formData to your backend endpoint using Axios or fetch.
-    // Example: 
-    try {
-      const response = await axios.post('/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      console.log('Upload successful:', response.data);
-    } catch (error) {
-      console.error('Error uploading:', error);
-    }
-    console.log('Form data:', formData); // For demo - to be replaced with actual API call
+    // // Here, you can send formData to your backend endpoint using Axios or fetch.
+    // // Example: 
+    // try {
+    //   const response = axios.post('/upload', formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    //   });
+    //   console.log('Upload successful:', response.data);
+    // } catch (error) {
+    //   console.error('Error uploading:', error);
+    // }
+    // console.log('Form data:', formData); // For demo - to be replaced with actual API call
   };
 
 
@@ -122,4 +139,4 @@ const Upload = () => {
   );
 };
 
-export default Upload;
+export default Home;
